@@ -36,6 +36,13 @@ WindowManager:
     background_color: 0,0,1,1
     FloatLayout:
         id:homefloat
+
+        Image:
+            size_hint_y: None
+            source: 'cwlogo.png'
+            width: 20
+            pos_hint: {"center_x":.5,"center_y":.8}
+
         Label:
 
             id:title_text
@@ -258,7 +265,7 @@ WindowManager:
         BoxLayout:
             id:settingsbox1
             orientation:"vertical"
-            Label:
+            Button:
                 text:"Accessibility"
             Button:
                 text:"High Contrast Mode"
@@ -289,7 +296,7 @@ WindowManager:
         BoxLayout:
             id:settingsbox2
             orientation:"vertical"
-            Label:
+            Button:
                 text:"Skins/Colour"
             Button:
                 text:"Default"
@@ -307,7 +314,7 @@ WindowManager:
 
         BoxLayout:
             orientation:"vertical"
-            Label:
+            Button:
                 id: misc
                 text:"Misc"
             Button:
