@@ -1,0 +1,349 @@
+#:import Button kivy.uix.button.Button
+#:import Label kivy.uix.label.Label
+#import Builder kivy.lang
+#:kivy 1.11.0
+
+WindowManager:
+    HomePage:
+    CrosswordPage:
+    DifficultySelect:
+    RecordsPage:
+    SettingsPage:
+    VictoryPage:
+<Button>:
+    bold: True
+    font_name: "Comic"
+    canvas.before:
+        Color:
+            rgba: .5, .5, .5, 1
+        Line:
+            width:2
+            rectangle: self.x, self.y, self.width, self.height
+    background_normal: ''
+    background_color: (153/255, 255/255, 255/255,1)
+
+
+<Label>:
+    id: label5
+    bold: False
+    font_name: "Comic"
+    font_size: 20
+    color: 0,0,0,1
+
+
+<HomePage>:
+    name: "home"
+    background_color: 0,0,1,1
+    FloatLayout:
+        id:homefloat
+        Label:
+
+            id:title_text
+            text: "CROSSWORD GENERATOR"
+            pos_hint: {"center_x":.5,"center_y":.6}
+
+        Button:
+            id:settingsbtn
+            text:"Settings"
+            size_hint: (0.3,0.3)
+            pos_hint: {"center_x":.2,"center_y":.3}
+            on_release:
+                app.root.current = "settings"
+        Button:
+            text:"Records"
+            size_hint: (0.3,0.3)
+            pos_hint: {"center_x":.8,"center_y":.3}
+            on_press:
+                app.root.current = "record"
+        Button:
+            text:"Crossword\nSelect"
+            size_hint: (0.3,0.3)
+            pos_hint: {"center_x":.5,"center_y":.4}
+            on_press:
+                app.root.current = "difficulty"
+                root.manager.transition.direction = "left"
+
+
+
+<DifficultySelect>:
+    name: "difficulty"
+    FloatLayout:
+        id: difficultyfloat
+        Label:
+            text: "Difficulty Select"
+            pos_hint: {"center_x":.5,"center_y":.7}
+
+
+        Button:
+            text: "Easy"
+            size_hint: (.2,.15)
+            pos_hint: {"center_x":.15,"center_y":.2}
+            on_release:
+                root.wordGen("1")
+                app.root.current = "cword"
+                root.manager.transition.direction = "left"
+        Button:
+            text: "Medium"
+            size_hint: (.2,.15)
+            pos_hint: {"center_x":.375,"center_y":.2}
+            on_release:
+                root.wordGen("2")
+                app.root.current = "cword"
+                root.manager.transition.direction = "left"
+        Button:
+            text: "Hard"
+            size_hint: (.2,.15)
+            pos_hint: {"center_x":.625,"center_y":.2}
+            on_release:
+                root.wordGen("3")
+                app.root.current = "cword"
+                root.manager.transition.direction = "left"
+        Button:
+            text: "Extreme"
+            size_hint: (.2,.15)
+            pos_hint: {"center_x":.85,"center_y":.2}
+            on_release:
+                root.wordGen("4")
+                app.root.current = "cword"
+                root.manager.transition.direction = "left"
+
+
+        Button:
+            text: "Return"
+            size_hint: (.1,.08)
+            pos_hint: {"center_x":.9,"center_y":.9}
+            on_release:
+                app.root.current = "home"
+
+
+
+
+
+<CrosswordPage>:
+    name: "cword"
+    thegrid : thegrid
+    padding: 50
+    spacing: 50
+    text_input: text_input
+    BoxLayout:
+        orientation:"vertical"
+
+
+        BoxLayout:
+            id: cwordbox
+            orientation:"horizontal"
+            size_hint: (1, None)
+            height: 30
+            Button:
+                text: "Verify"
+
+                on_release:
+                    root.verify()
+            Button:
+                text: "hint"
+                pos_hint: {"center_x":.5}
+                on_release:
+                    root.givehint()
+
+            Button:
+                text: "return"
+                pos_hint: {"center_x":1}
+                on_release:
+                    app.root.current = "home"
+                    root.manager.transition.fade = "left"
+
+
+        BoxLayout:
+            orientation:"horizontal"
+
+            GridLayout:
+
+                id: thegrid
+                cols: 30
+
+
+
+
+
+            BoxLayout:
+                orientation:"vertical"
+                BoxLayout:
+                    orientation:"horizontal"
+                    size_hint: (1, 10)
+                    BoxLayout:
+                        id: downclues
+                        orientation:"vertical"
+                        Label:
+                            text:"down"
+                    BoxLayout:
+                        id: acrossclues
+                        orientation:"vertical"
+                        Label:
+                            text:"across"
+
+
+                TextInput:
+                    id: text_input
+                    pos_hint: {'center_y': 1}
+                    font_size : 40
+                    write_tab: False
+                    multiline: False
+                    on_text_validate: root.crossword_append()
+                    text: ''
+
+
+                Button:
+                    id:cwordenter
+                    text: "Enter"
+                    on_press:
+                        root.crossword_append()
+
+
+
+
+
+<RecordsPage>:
+    name: "record"
+    BoxLayout:
+        id:cumulative
+        orientation:"horizontal"
+        BoxLayout:
+            id:cumulative
+            orientation:"vertical"
+            Label:
+                text:"Cumulative Records"
+            Label:
+                text:"Cumulative Records"
+            Label:
+                text:"Cumulative Records"
+            Label:
+                text:"Cumulative Records"
+            Label:
+                text:"Cumulative Records"
+        BoxLayout:
+            id:individual
+            orientation:"vertical"
+            Label:
+                text:"Individual Records"
+            Label:
+                text:"Individual Records"
+            Label:
+                text:"Individual Records"
+            Label:
+                text:"Individual Records"
+            Label:
+                text:"Individual Records"
+            Label:
+                text:"Individual Records"
+            Label:
+                text:"Individual Records"
+            Label:
+                text:"Individual Records"
+        BoxLayout:
+            id:recordsbox
+            orientation:"vertical"
+            Button:
+                text:"Return"
+                on_release:
+                    app.root.current = "home"
+            Button:
+                text:"Reset Data"
+                on_release:
+                    root.reset_data()
+
+<SettingsPage>:
+    name: "settings"
+    BoxLayout:
+        orientation:"horizontal"
+        BoxLayout:
+            id:settingsbox1
+            orientation:"vertical"
+            Label:
+                text:"Accessibility"
+            Button:
+                text:"High Contrast Mode"
+                on_release:
+                    root.colour_change("highcontrast")
+                    root.colour_update()
+
+            Button:
+                text:"Font Type"
+                on_release:
+                    root.font_change()
+                    root.colour_update()
+
+            Button:
+                text:"Colourblind Mode"
+                on_press:
+                    root.colour_change("colourblind")
+                    root.colour_update()
+            Button:
+                text:"Default"
+                on_press:
+                    root.colour_change("default")
+                    root.colour_update()
+
+
+
+
+        BoxLayout:
+            id:settingsbox2
+            orientation:"vertical"
+            Label:
+                text:"Skins/Colour"
+            Button:
+                text:"Default"
+                on_release:
+                    root.colour_change("default")
+                    root.colour_update()
+            Button:
+                text:"Dark Mode"
+                on_release:
+                    root.colour_change("dark")
+                    root.colour_update()
+
+
+
+
+        BoxLayout:
+            orientation:"vertical"
+            Label:
+                id: misc
+                text:"Misc"
+            Button:
+                id:tutorial
+                text:"Tutorial"
+                on_press:
+                    root.tutorial()
+
+
+
+
+        Button:
+            id:settingsreturn
+            text:"Return"
+            on_release:
+                app.root.current = "home"
+
+<VictoryPage>:
+    name: "victory"
+
+
+    BoxLayout:
+        orientation:"vertical"
+
+        Label:
+            id:victorytext
+            text: "VICTORY"
+
+        BoxLayout:
+            id:stats
+
+    FloatLayout:
+
+        Button:
+            id:victoryreturn
+            size_hint: (.1,.08)
+            pos_hint: {"center_x":.9,"center_y":.9}
+            text:"Return"
+            on_release:app.root.current = "home"
